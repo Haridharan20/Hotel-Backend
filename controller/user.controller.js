@@ -1,5 +1,5 @@
 const UserModel = require("../model/user.model");
-const encrypt = require("bcrypt");
+const encrypt = require("bcryptjs");
 const jwt = require("../auth/token");
 require("dotenv/config");
 const { REFRESH_TOKEN } = process.env;
