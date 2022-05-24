@@ -23,6 +23,14 @@ const UserSchema = mongoose.Schema(
       type: [Object],
       default: null,
     },
+    address: {
+      type: String,
+      default: null,
+    },
+    profilepic: {
+      type: [Object],
+      default: null,
+    },
     isAdmin: {
       type: Boolean,
       default: false,

@@ -1,6 +1,7 @@
 const UserModel = require("../model/user.model");
 const encrypt = require("bcryptjs");
 const jwt = require("../auth/token");
+
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 require("dotenv/config");
@@ -57,6 +58,7 @@ const userController = {
           data: user,
           token: token,
           refresh: refreshtoken,
+          image: user.profilepic[0],
         });
       }
     } catch (error) {
@@ -73,10 +75,35 @@ const userController = {
         email: user.email,
         phone: user.phone,
         bookings: user.myBookings,
+        address: user.address,
+        image: user.profilepic,
       });
     }
   },
 
+  profileUpdate: (req, res) => {
+    console.log(req);
+    const profilepic = {
+      filename: req.file.filename,
+      path: req.file.path,
+    };
+    console.log(profilepic);
+    UserModel.updateOne(
+      { email: req.body.email },
+      {
+        address: req.body.address,
+        name: req.body.name,
+        profilepic: profilepic,
+      },
+      (err, docs) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json({ msg: "Update Successfully" });
+        }
+      }
+    );
+  },
   myBooking: (req, res) => {
     console.log(req.body, req.data);
     UserModel.updateOne(
