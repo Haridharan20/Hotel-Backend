@@ -13,6 +13,7 @@ route.post("/refresh", controller.refreshToken);
 route.get("/profile", verify.validate, controller.profile);
 route.post("/myBooking", verify.validate, controller.myBooking);
 route.post("/updateMyBooking", controller.updateMyBooking);
+route.post("/payment", controller.payment);
 
 // module.exports = route;
 module.exports = route;

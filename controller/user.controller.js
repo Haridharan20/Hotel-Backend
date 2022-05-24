@@ -1,8 +1,10 @@
 const UserModel = require("../model/user.model");
 const encrypt = require("bcryptjs");
 const jwt = require("../auth/token");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 require("dotenv/config");
-const { REFRESH_TOKEN } = process.env;
+const { REFRESH_TOKEN, STRIPE_PUBLIC_KEY } = process.env;
 const userController = {
   register: async (req, res) => {
     const { username, email, phonenumber, password } = req.body;
@@ -124,6 +126,31 @@ const userController = {
       const accessToken = jwt.generateAccessToken(token.email);
       return res.json({ accessToken });
     }
+  },
+
+  payment: async (req, res) => {
+    stripe.customers
+      .create({
+        email: req.body.name,
+        source: req.body.token,
+      })
+      .then((customer) => {
+        console.log("cs", customer);
+        return stripe.paymentIntents.create({
+          amount: req.body.price,
+          description: "Room payment",
+          currency: "inr",
+          payment_method_types: ["card"],
+        });
+      })
+      .then((charge) => {
+        console.log("success");
+        res.send({ msg: "success", value: true });
+      })
+      .catch((err) => {
+        console.log("failed", err);
+        res.send({ msg: "Failed", value: false });
+      });
   },
 };
 

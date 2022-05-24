@@ -6,6 +6,7 @@ const hotelRoute = require("./routes/hotel.routes");
 const roomRoutes = require("./routes/room.routes");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+
 require("dotenv/config");
 
 const app = express();
