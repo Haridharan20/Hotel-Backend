@@ -26,6 +26,9 @@ const RoomSchema = mongoose.Schema(
       type: [String],
       required: true,
     },
+    offer: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

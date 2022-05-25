@@ -1,9 +1,19 @@
 var mongoose = require("mongoose");
 const HotelModel = require("../model/hotel.model");
 const hotelController = {
-  add: (req, res) => {
+  add: async (req, res) => {
+    console.log("Demo");
     console.log(req);
     const { admin_id, hotelname, address, city, state, zip, phone } = req.body;
+    const hotelPhone = await HotelModel.findOne({ contact_no: phone });
+    if (hotelPhone) {
+      return res.status(400).json({ msg: "Phonenumber already in use" });
+    }
+    let imageArray = [];
+    req.files.forEach((image) => {
+      imageArray.push(image.filename);
+    });
+    console.log(imageArray);
     const model = new HotelModel({
       admin_id,
       name: hotelname,
@@ -12,6 +22,7 @@ const hotelController = {
       state,
       zip,
       contact_no: phone,
+      images: imageArray,
     });
     model
       .save()

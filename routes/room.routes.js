@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const roomController = require("../controller/room.controller");
-router.post("/add", roomController.addRoom);
+const multer_room = require("../Multer/multer_room");
+router.post("/add", multer_room.array("images"), roomController.addRoom);
 router.delete("/delete/:id", roomController.deleteRoom);
 router.delete("/deleteAll/:id", roomController.deleteAllRooms);
 router.put("/updateBooking", roomController.updateBooking);

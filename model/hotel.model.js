@@ -37,6 +37,7 @@ const HotelSchema = mongoose.Schema({
   contact_no: {
     type: Number,
     required: true,
+    unique: true,
   },
 
   images: {

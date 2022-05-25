@@ -82,27 +82,34 @@ const userController = {
   },
 
   profileUpdate: (req, res) => {
-    console.log(req);
-    const profilepic = {
-      filename: req.file.filename,
-      path: req.file.path,
-    };
-    console.log(profilepic);
-    UserModel.updateOne(
-      { email: req.body.email },
-      {
+    let field;
+
+    try {
+      const profilepic = {
+        filename: req.file.filename,
+        path: req.file.path,
+      };
+      field = {
         address: req.body.address,
         name: req.body.name,
         profilepic: profilepic,
-      },
-      (err, docs) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.json({ msg: "Update Successfully" });
-        }
+      };
+    } catch (err) {
+      console.log(err);
+      field = {
+        address: req.body.address,
+        name: req.body.name,
+      };
+    }
+    console.log(field);
+
+    UserModel.updateOne({ email: req.body.email }, field, (err, docs) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json({ msg: "Update Successfully" });
       }
-    );
+    });
   },
   myBooking: (req, res) => {
     console.log(req.body, req.data);

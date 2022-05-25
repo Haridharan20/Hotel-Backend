@@ -14,6 +14,8 @@ app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static("images/profile"));
+app.use(express.static("images/hotels"));
+app.use(express.static("images/rooms"));
 
 const port = 8000;
 

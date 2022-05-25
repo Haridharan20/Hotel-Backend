@@ -2,13 +2,22 @@ const RoomModel = require("../model/room.model");
 const hotelController = require("../controller/hotel.controller");
 const roomController = {
   addRoom: (req, res) => {
-    const { hotel_id, roomtype, price, capacity } = req.body;
+    // console.log(req.body);
+    // console.log(req.files);
+    const { hotel_id, roomtype, price, capacity, offer } = req.body;
+    let imageArray = [];
+    req.files.forEach((image) => {
+      imageArray.push(image.filename);
+    });
     const model = RoomModel({
       hotel_id,
       roomtype,
       price,
       capacity,
+      offer,
+      images: imageArray,
     });
+    console.log(model);
     model
       .save()
       .then((result) => {
@@ -68,6 +77,7 @@ const roomController = {
         roomtype: req.body.roomtype,
         capacity: req.body.capacity,
         price: req.body.price,
+        offer: req.body.offer,
       },
       null,
       (err, docs) => {
