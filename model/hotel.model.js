@@ -13,7 +13,7 @@ const HotelSchema = mongoose.Schema({
 
   address: {
     type: String,
-    rquired: true,
+    required: true,
   },
   rooms: [
     {
@@ -28,7 +28,7 @@ const HotelSchema = mongoose.Schema({
   },
   state: {
     type: String,
-    requird: true,
+    required: true,
   },
   zip: {
     type: String,
